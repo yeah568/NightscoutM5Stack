@@ -23,11 +23,13 @@ COMx is mapped to /dev/ttySx.
     4. Create the initial sdkconfig. You may also want to update the serial flashing port at this point to the correct serial port. (`/dev/ttySX`, replace X as needed).
 
       `./BUILD.sh menuconfig`
+
     5. Build the firmware
 
       `./BUILD.sh`
+      
     6. Flash the firmware
-    
+
       `./BUILD.sh flash`
 
 Congrats, you should now have MicroPython running on your M5Stack.
