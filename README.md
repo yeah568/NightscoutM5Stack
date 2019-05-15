@@ -19,7 +19,7 @@ COMx is mapped to /dev/ttySx.
        `git clone --depth 1 https://github.com/m5stack/M5Stack_MicroPython.git`
     3. Change to the MicroPython_BUILD directory
 
-       `cd MicroPython_BUILD`
+       `cd M5Stack_MicroPython/MicroPython_BUILD`
     4. Create the initial sdkconfig. You may also want to update the serial flashing port at this point to the correct serial port. (`/dev/ttySX`, replace X as needed).
 
       `./BUILD.sh menuconfig`
@@ -27,7 +27,7 @@ COMx is mapped to /dev/ttySx.
     5. Build the firmware
 
       `./BUILD.sh`
-      
+
     6. Flash the firmware
 
       `./BUILD.sh flash`
