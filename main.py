@@ -58,11 +58,20 @@ def do_connect():
     sta_if = network.WLAN(network.STA_IF)
     if not sta_if.isconnected():
         print('connecting to network...')
+        lcd.print("Connecting to " + secrets['ssid'] + "\n")
         sta_if.active(True)
         sta_if.connect(secrets['ssid'], secrets['password'])
         while not sta_if.isconnected():
             pass
     print('network config:', sta_if.ifconfig())
+    lcd.print("Connected! IP: " + sta_if.ifconfig()[0] + "\n")
+
+    rtc = machine.RTC()
+    rtc.ntp_sync(server="time.google.com")
+    lcd.print("Syncing time\n")
+    while not rtc.synced():
+        pass
+    lcd.print("Time synced! Time: " + str(time.time()) + "\n")
 
 
 def stale_data(timestamp):
@@ -141,7 +150,6 @@ def draw_graph(resp, timeStart, timeEnd):
     for idx, point in enumerate(resp):
         x = round(GRAPH_WIDTH * (int(point["date"] / 1000)  - timeStart) / (timeEnd - timeStart))
         y = round(min(point["sgv"] / GRAPH_MAX, 1.0) * GRAPH_HEIGHT)
-        # print(x)
         lcd.circle(x, SCREEN_HEIGHT - y, 3, BLACK, BLACK)
 
 
