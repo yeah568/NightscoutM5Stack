@@ -113,19 +113,19 @@ def text_transform_bg(val):
 
 def text_transform_direction(val):
     if val == "Flat":
-        return "→"
+        return "->"
     if val == "SingleUp":
-        return "↑"
+        return "^"
     if val == "DoubleUp":
-        return "⇈"
+        return "^^"
     if val == "DoubleDown":
-        return "⇊"
+        return "vv"
     if val == "SingleDown":
-        return "↓"
+        return "v"
     if val == "FortyFiveDown":
-        return "↘"
+        return ">v"
     if val == "FortyFiveUp":
-        return "↗"
+        return ">^"
     return val
 
 
