@@ -143,6 +143,7 @@ def draw_graph(resp, timeStart, timeEnd):
     lcd.rect(0, SCREEN_HEIGHT - GRAPH_HEIGHT, GRAPH_WIDTH, GRAPH_HEIGHT - WARN_HIGH_Y, YELLOW, YELLOW)
     lcd.rect(0, SCREEN_HEIGHT - WARN_LOW_Y, GRAPH_WIDTH, WARN_LOW_Y, RED, RED)
 
+    # Prints lines between graph sections.
     # lcd.line(0, SCREEN_HEIGHT - GRAPH_HEIGHT, GRAPH_WIDTH, SCREEN_HEIGHT - GRAPH_HEIGHT)
     # lcd.line(0, SCREEN_HEIGHT - WARN_HIGH_Y, GRAPH_WIDTH, SCREEN_HEIGHT - WARN_HIGH_Y)
     # lcd.line(0, SCREEN_HEIGHT - WARN_LOW_Y, GRAPH_WIDTH, SCREEN_HEIGHT - WARN_LOW_Y)
@@ -157,38 +158,6 @@ def draw_graph(resp, timeStart, timeEnd):
 # connect to wifi
 do_connect()
 
-
-
-# # create the display
-# pyportal = PyPortal(url=DATA_SOURCE,
-#                     caption_text=secrets['human'], # Name of the person being monitored
-#                     caption_position=(100, 80), # This is going to be subjective to the length of the name
-#                     caption_font=display_font,
-#                     caption_color=0x000000,
-#                     json_path=(BG_VALUE, BG_DIRECTION, DATA_AGE),
-#                     status_neopixel=board.NEOPIXEL,
-#                     default_bg=0xFFFFFF,
-#                     text_font=display_font,
-#                     text_position=((90, 120),   # BG location
-#                                    (140, 160)), # Direction location
-#                     text_color=(0x000000,  # BG text color
-#                                 0x000000), # Direction text color
-#                     text_wrap=(35, # characters to wrap for BG
-#                                0), # no wrap for direction
-#                     text_maxlen=(180, 30), # max text size for BG & direction
-#                     text_transform=(text_transform_bg,text_transform_direction), # pre-processing of the text to ensure proper format
-#                    )
-
-# # Preload the font for performance
-# pyportal.preload_font(b'mg/dl012345789');
-# pyportal.preload_font((0x2191, 0x2192, 0x2193))
-
-rtc = machine.RTC()
-rtc.ntp_sync(server="time.google.com")
-
-lcd.font("UbuntuMono-B40.fon")
-
-
 def main_loop():
     while True:
         try:
@@ -199,8 +168,11 @@ def main_loop():
             current = resp[0]
             bg_color = get_bg_color(current["sgv"], current["date"])
             lcd.clear(bg_color)
+
+            lcd.font("UbuntuMono-B40.fon")
             lcd.setTextColor(color=BLACK, bcolor=bg_color)
-            lcd.print(text_transform_bg(current["sgv"]) + text_transform_direction(current["direction"]), lcd.CENTER, 20)
+            lcd.print(text_transform_bg(current["sgv"]) + " " + text_transform_direction(current["direction"]), lcd.CENTER, 20)
+
             draw_graph(resp, dateStart, now)
             print("Response is", resp[0]["sgv"])
 
